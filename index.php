@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal Zoologico</title>
+    <meta name="description" content="Explora el mundo animal en nuestro zoológico virtual: descubre hábitats, alimentación y curiosidades de especies como el tucán, elefante, zarigüeya y muchas más. ¡Visítanos y aprende sobre la biodiversidad!">
     <?php include('cabecera.php'); ?>
     <style>
   .img-card {
@@ -13,16 +14,24 @@
 
    body {
     /* Imagen de fondo */
-    background-image: url('img/Fondo.jpg'); 
+    background-image: url('img/Fondo.webp'); 
     background-size: cover; 
     background-repeat: no-repeat;
     background-attachment: fixed; 
-    background-position: center; 
+    background-position: center;
+    
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   .img-card {
     height: 300px;        
     object-fit: cover;   
+  }
+
+  .row{
+    flex: 1;
   }
 </style>
 </head>
@@ -47,7 +56,7 @@
   </div>
   <div class="col">
     <div class="card h-100">
-      <img src="img/tucan.jpg" class="card-img-top img-card" alt="tucan">
+      <img src="img/tucan.webp" class="card-img-top img-card" alt="tucan">
       <div class="card-body">
         <h5 class="card-title">Tucan</h5>
         <p class="card-text">
@@ -61,7 +70,7 @@
   </div>
   <div class="col">
     <div class="card h-100">
-      <img src="img/elefante.jpg" class="card-img-top img-card" alt="elefante">
+      <img src="img/elefante.webp" class="card-img-top img-card" alt="elefante">
       <div class="card-body">
         <h5 class="card-title">Elefante</h5>
         <p class="card-text">

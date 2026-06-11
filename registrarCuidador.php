@@ -45,7 +45,7 @@
             isset($_POST['nombre']) && isset($_POST['especialidad']) &&
             isset($_POST['turno']) && isset($_POST['telefono'])
         ) {
-            require_once('Conexion.php');
+            require_once('conexion.php');
             $c = new Conexion();
 
             $r = $c->insertarCuidador(

@@ -1,6 +1,6 @@
 <?php 
 if(isset($_POST['idCuidador'])){
-require_once('Conexion.php');
+require_once('conexion.php');
 $c= new Conexion();
 $res = $c->eliminarCuidador($_POST['idCuidador']);
 if($res){

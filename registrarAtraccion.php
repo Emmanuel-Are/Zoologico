@@ -52,7 +52,7 @@
             isset($_POST['ubicacion']) && isset($_POST['horario']) &&
             isset($_POST['edad_minima']) && isset($_POST['tipo'])
         ) {
-            require_once('Conexion.php');
+            require_once('conexion.php');
             $c = new Conexion();
 
             $r = $c->insertarAtraccion(

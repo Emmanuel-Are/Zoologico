@@ -1,6 +1,6 @@
 <?php 
 if(isset($_POST['idAnimal'])){
-require_once('Conexion.php');
+require_once('conexion.php');
 $c= new Conexion();
 $res = $c->eliminarAnimal($_POST['idAnimal']);
 if($res){

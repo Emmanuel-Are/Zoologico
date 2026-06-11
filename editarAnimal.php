@@ -21,7 +21,7 @@
         isset($_POST['peso_aproximado']) &&
         isset($_POST['peligrosidad'])
     ) {
-        require_once('Conexion.php');
+        require_once('conexion.php');
         $c = new Conexion();
         $r = $c->actualizarAnimal(
             $_POST['idAnimal'],

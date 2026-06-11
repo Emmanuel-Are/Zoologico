@@ -19,7 +19,7 @@
         isset($_POST['turno']) &&
         isset($_POST['telefono'])
     ) {
-        require_once('Conexion.php');
+        require_once('conexion.php');
         $c = new Conexion();
         $r = $c->actualizarCuidador(
             $_POST['idCuidador'],

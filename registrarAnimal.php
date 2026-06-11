@@ -57,7 +57,7 @@
             isset($_POST['origen']) && isset($_POST['alimentacion']) &&
             isset($_POST['peso_aproximado']) && isset($_POST['peligrosidad'])
         ) {
-            require_once('Conexion.php');
+            require_once('conexion.php');
             $c = new Conexion();
 
             // Asegúrate que el método insertarAnimal reciba estos parámetros en ese orden
