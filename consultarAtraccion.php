@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de Atracciones</title>
-        <?php include('cabecera.php'); ?>
+    <?php include('cabecera.php'); ?>
 </head>
 
 <body>
@@ -42,6 +42,69 @@
                 }
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const campo = document.getElementById("campo");
+            const filtro = document.getElementById("filtro");
+
+            campo.addEventListener("change", function() {
+
+                filtro.innerHTML =
+                    '<option value="">Seleccione una opción</option>';
+
+                let opciones = [];
+
+                switch (this.value) {
+
+                    case "tipo":
+                        opciones = [
+                            "Educativa",
+                            "Recreativa",
+                            "Interactiva"
+                        ];
+                        break;
+
+                    case "ubicacion":
+                        opciones = [
+                            "Area de juegos mecanicos",
+                            "Area Sur",
+                            "Auditorio Principal",
+                            "Pabellón Reptiles",
+                            "Sector Norte",
+                            "Zona Aviarios",
+                            "Zona Infantil"
+                        ];
+                        break;
+
+                    case "edad_minima":
+                        opciones = [
+                            "0",
+                            "3",
+                            "5",
+                            "8",
+                            "10",
+                            "12",
+                            "15",
+                            "18"
+                        ];
+                        break;
+                }
+
+                opciones.forEach(function(opcion) {
+
+                    let option = document.createElement("option");
+
+                    option.value = opcion;
+                    option.textContent = opcion;
+
+                    filtro.appendChild(option);
+
+                });
+
+            });
+
+        });
     </script>
 
     <div class="container mt-4">
@@ -57,20 +120,37 @@
             </form>
 
             <!-- Formulario de filtrado -->
+            <!-- Formulario de filtrado -->
             <form action="consultarAtraccion.php" method="post" class="row align-items-center mb-4">
-                <div class="col-9 mt-2">
-                    <input type="text" placeholder="Filtrar por Nombre, Ubicación, Edad Mínima, Tipo" name="filtro" class="form-control" required>
+
+                <div class="col-md-4 mt-2">
+                    <select name="campo" id="campo" class="form-control" required>
+                        <option value="">Seleccione campo</option>
+                        <option value="tipo">Tipo</option>
+                        <option value="ubicacion">Ubicación</option>
+                        <option value="edad_minima">Edad mínima</option>
+                    </select>
                 </div>
-                <div class="col-md-3 mt-2 text-right">
-                    <button class="btn btn-primary w-100" type="submit">Filtrar</button>
+
+                <div class="col-md-5 mt-2">
+                    <select name="filtro" id="filtro" class="form-control" required>
+                        <option value="">Seleccione una opción</option>
+                    </select>
                 </div>
+
+                <div class="col-md-3 mt-2">
+                    <button class="btn btn-primary w-100" type="submit">
+                        Filtrar
+                    </button>
+                </div>
+
             </form>
         </div>
 
         <?php
         require_once('conexion.php');
         $c = new Conexion();
-
+        $res = $c->consultarAtraccion();
         if (isset($_POST['busqueda'])) {
             $busqueda = trim($_POST['busqueda']);
             echo '<div class="alert alert-info">Búsqueda aplicada: ' . $busqueda . '</div>';
@@ -85,19 +165,38 @@
         tipo LIKE '%$busqueda%'
     ";
             $res = $c->consultarAtraccion($condicion);
-        } elseif (isset($_POST['filtro'])) {
-            $filtro = $_POST['filtro'];
-            echo '<div class="alert alert-info">Filtro aplicado: ' . $filtro . '</div>';
-            echo '<a href="consultarAtraccion.php" class="btn btn-info mb-3">Limpiar filtro</a>';
-            $condicion = "
-        nombre = '$filtro' OR
-        ubicacion = '$filtro' OR
-        edad_minima = '$filtro' OR
-        tipo = '$filtro'
-    ";
-            $res = $c->consultarAtraccion($condicion);
-        } else {
-            $res = $c->consultarAtraccion();
+        } elseif (
+            isset($_POST['campo']) &&
+            isset($_POST['filtro'])
+        ) {
+
+            $campo = $_POST['campo'];
+            $filtro = trim($_POST['filtro']);
+
+            echo '<div class="alert alert-info">
+            Filtro aplicado: ' . $campo . ' = ' . $filtro . '
+          </div>';
+
+            echo '<a href="consultarAtraccion.php"
+            class="btn btn-info mb-3">
+            Limpiar filtro
+          </a>';
+
+            $camposPermitidos = [
+                'tipo',
+                'ubicacion',
+                'edad_minima'
+            ];
+
+            if (in_array($campo, $camposPermitidos)) {
+
+                $condicion = "$campo = '$filtro'";
+
+                $res = $c->consultarAtraccion($condicion);
+            } else {
+
+                $res = $c->consultarAtraccion();
+            }
         }
         ?>
 
